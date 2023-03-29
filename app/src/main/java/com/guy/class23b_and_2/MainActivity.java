@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +29,25 @@ public class MainActivity extends AppCompatActivity {
         main_BTN_save.setOnClickListener(v -> save());
         main_BTN_load.setOnClickListener(v -> load());
 
+
+
+        User user = new User()
+                .setName("Maylo")
+                .setAge(20)
+                .setCity("Tel-Aviv");
+
+
+        String json = new Gson().toJson(user);
+        MSPV3.getMe().saveString("USER", json);
+
+
+        String json2 = MSPV3.getMe().readString("USER", "");
+        User u2;
+        try {
+            u2 = new Gson().fromJson(json2, User.class);
+        } catch (Exception ex) {
+            u2 = new User();
+        }
     }
 
     @Override
